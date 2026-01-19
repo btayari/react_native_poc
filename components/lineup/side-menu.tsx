@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface MenuItem {
   icon: keyof typeof Ionicons.glyphMap;
@@ -33,7 +34,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ isWeb = false }) => {
   ];
 
   return (
-    <View style={[styles.container, isWeb && styles.webContainer]}>
+    <SafeAreaView style={[styles.container, isWeb && styles.webContainer]}>
       {/* User Profile */}
       <View style={styles.profileSection}>
         <View style={styles.avatarContainer}>
@@ -77,7 +78,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ isWeb = false }) => {
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

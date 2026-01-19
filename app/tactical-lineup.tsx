@@ -105,19 +105,19 @@ export default function TacticalLineupScreen() {
       {/* Drawer Modal */}
       <Modal
         visible={showDrawer}
-        animationType="slide"
+        animationType="none"
         transparent
         onRequestClose={() => setShowDrawer(false)}
       >
         <View style={styles.drawerOverlay}>
+          <View style={styles.drawerContent}>
+            <SideMenu />
+          </View>
           <TouchableOpacity
             style={styles.drawerBackdrop}
             activeOpacity={1}
             onPress={() => setShowDrawer(false)}
           />
-          <View style={styles.drawerContent}>
-            <SideMenu />
-          </View>
         </View>
       </Modal>
 
@@ -477,6 +477,7 @@ const styles = StyleSheet.create({
   drawerOverlay: {
     flex: 1,
     flexDirection: 'row',
+    backgroundColor: 'transparent',
   },
   drawerBackdrop: {
     flex: 1,
@@ -484,7 +485,13 @@ const styles = StyleSheet.create({
   },
   drawerContent: {
     width: 280,
+    height: '100%',
     backgroundColor: '#0d1117',
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 0 },
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
+    elevation: 10,
   },
   webCenter: {
     flex: 3,

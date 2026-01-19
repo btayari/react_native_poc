@@ -1,17 +1,5 @@
-import { useEffect } from 'react';
-import { useRouter } from 'expo-router';
-import { View } from 'react-native';
+import { Redirect } from 'expo-router';
 
 export default function HomeScreen() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      router.replace('/tactical-lineup');
-    }, 0);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  return <View />;
+  return <Redirect href="/tactical-lineup" />;
 }
