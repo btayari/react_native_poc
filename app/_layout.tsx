@@ -10,11 +10,17 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="tactical-lineup" options={{ headerShown: false }} />
-            <Stack.Screen name="squad-management" options={{ headerShown: false }} />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            animation: 'none'
+          }}
+          initialRouteName="index"
+        >
+            <Stack.Screen name="index" />
+            <Stack.Screen name="tactical-lineup" />
+            <Stack.Screen name="squad-management" />
+            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
         </Stack>
       <StatusBar style="light" />
     </ThemeProvider>
