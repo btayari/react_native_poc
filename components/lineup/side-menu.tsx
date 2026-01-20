@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter, usePathname } from 'expo-router';
 
 interface MenuItem {
   icon: keyof typeof Ionicons.glyphMap;
@@ -15,15 +16,18 @@ interface SideMenuProps {
 }
 
 export const SideMenu: React.FC<SideMenuProps> = ({ isWeb = false }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const menuItems: MenuItem[] = [
     { icon: 'home', label: 'Home', isActive: false, onPress: () => {} },
-    { icon: 'bar-chart', label: 'Prediction', isActive: true, onPress: () => {} },
+    { icon: 'bar-chart', label: 'Prediction', isActive: pathname === '/tactical-lineup', onPress: () => router.push('/tactical-lineup') },
     { icon: 'swap-horizontal', label: 'Transfers', isActive: false, onPress: () => {} },
     { icon: 'search', label: 'Scouting', isActive: false, onPress: () => {} },
   ];
 
   const teamMenuItems: MenuItem[] = [
-    { icon: 'people', label: 'Squad', isActive: false, onPress: () => {} },
+    { icon: 'people', label: 'Squad', isActive: pathname === '/squad-management', onPress: () => router.push('/squad-management') },
     { icon: 'stats-chart', label: 'Statistics', isActive: false, onPress: () => {} },
     { icon: 'calendar', label: 'Fixtures', isActive: false, onPress: () => {} },
   ];
