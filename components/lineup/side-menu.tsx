@@ -20,7 +20,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ isWeb = false }) => {
   const pathname = usePathname();
 
   const menuItems: MenuItem[] = [
-    { icon: 'home', label: 'Home', isActive: false, onPress: () => {} },
+    { icon: 'home', label: 'Home', isActive: pathname === '/', onPress: () => router.push('/') },
     { icon: 'bar-chart', label: 'Prediction', isActive: pathname === '/tactical-lineup', onPress: () => router.push('/tactical-lineup') },
     { icon: 'swap-horizontal', label: 'Transfers', isActive: false, onPress: () => {} },
     { icon: 'search', label: 'Scouting', isActive: false, onPress: () => {} },
@@ -114,6 +114,9 @@ const styles = StyleSheet.create({
   },
   webContainer: {
     width: 280,
+    minWidth: 280,
+    maxWidth: 280,
+    flexShrink: 0,
   },
   profileSection: {
     padding: 24,

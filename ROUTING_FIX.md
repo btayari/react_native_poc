@@ -25,26 +25,36 @@
    - Added `animation: 'none'` for instant navigation
    - Set `initialRouteName: "index"`
 4. **app/index.tsx**
-   - Changed from direct Redirect to useEffect with setTimeout
-   - Added loading indicator
-   - Uses `router.replace()` to avoid back button issues
+   - Implemented full Home Dashboard screen
+   - Shows upcoming match with win probability visualization
+   - Displays quick actions, team stats, and recent activity
+   - Responsive layout for mobile and web
+   - No redirect needed - serves as the main landing page
 5. **.github/workflows/deploy.yml**
    - Added step to create `.nojekyll` file
    - Fixed output directory specification
 ## How It Works Now
+
 1. **Initial Load**: 
    - User visits `/` or `/react-native-poc/`
-   - Shows loading indicator briefly
-   - Automatically redirects to `/tactical-lineup`
+   - Shows the Home Dashboard screen with:
+     - Upcoming match card with win probability
+     - Quick action buttons (Prediction, Squad, Transfers, Scouting)
+     - Team overview stats (avg rating, squad size, avg age, overall)
+     - Recent activity feed
+
 2. **Side Menu Navigation**:
+   - "Home" button → `/` (Dashboard)
    - "Prediction" button → `/tactical-lineup`
    - "Squad" button → `/squad-management`
    - Uses `router.push()` for navigation
    - Active state is tracked with `usePathname()`
+
 3. **Web Layout**:
    - Screens detect window width > 900px
-   - Automatically show side menu on left
+   - Automatically show side menu on left (fixed 280px width)
    - Layout adjusts for mobile (drawer menu)
+
 ## Testing
 To test locally:
 ```bash
