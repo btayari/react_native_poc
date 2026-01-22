@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { SideMenu } from '@/components/lineup/side-menu';
 import { PitchView } from '@/components/lineup/pitch-view';
 import { PLAYERS, FORMATIONS } from '@/constants/lineup-data';
@@ -20,6 +21,7 @@ export default function TacticalLineupScreen() {
   const [showFormationPicker, setShowFormationPicker] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const { width } = useWindowDimensions();
+  const router = useRouter();
 
   const isWebLayout = width > 900;
   const formation = FORMATIONS[selectedFormation];
@@ -96,7 +98,10 @@ export default function TacticalLineupScreen() {
             <Text style={styles.statusValue}>26.4</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.primaryButton}>
+        <TouchableOpacity
+          style={styles.primaryButton}
+          onPress={() => router.push('/match-prediction')}
+        >
           <Text style={styles.primaryButtonText}>Make Prediction</Text>
           <Ionicons name="arrow-forward" size={20} color="#ffffff" />
         </TouchableOpacity>
@@ -165,7 +170,10 @@ export default function TacticalLineupScreen() {
         </ScrollView>
 
         <View style={styles.webPanelFooter}>
-          <TouchableOpacity style={styles.primaryButton}>
+          <TouchableOpacity
+            style={styles.primaryButton}
+            onPress={() => router.push('/match-prediction')}
+          >
             <Text style={styles.primaryButtonText}>Make Prediction</Text>
             <Ionicons name="arrow-forward" size={24} color="#ffffff" />
           </TouchableOpacity>
