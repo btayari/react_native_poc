@@ -27,7 +27,7 @@
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png",
-      "baseUrl": "/react-native-poc"
+      "baseUrl": "/react_native_poc"
     },
     "plugins": [
       "expo-router",
