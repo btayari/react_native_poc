@@ -15,16 +15,22 @@ import { SideMenu } from '@/components/lineup/side-menu';
 import { PitchView } from '@/components/lineup/pitch-view';
 import { PLAYERS, FORMATIONS } from '@/constants/lineup-data';
 import { PlayerPosition } from '@/types/lineup';
+import { Toast } from '@/components/ui/toast';
 
 export default function TacticalLineupScreen() {
   const [selectedFormation, setSelectedFormation] = useState('4-3-3');
   const [showFormationPicker, setShowFormationPicker] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const { width } = useWindowDimensions();
   const router = useRouter();
 
   const isWebLayout = width > 900;
   const formation = FORMATIONS[selectedFormation];
+
+  const showComingSoonToast = () => {
+    setShowToast(true);
+  };
 
   const getPositionName = (position: PlayerPosition): string => {
     switch (position) {
@@ -47,8 +53,8 @@ export default function TacticalLineupScreen() {
           <TouchableOpacity onPress={() => setShowDrawer(true)}>
             <Ionicons name="menu" size={24} color="#ffffff" />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Ionicons name="settings" size={24} color="#ffffff" />
+          <TouchableOpacity onPress={showComingSoonToast}>
+            <Ionicons name="settings" size={24} color="#6B7280" />
           </TouchableOpacity>
         </View>
         <View style={styles.teamInfo}>
@@ -76,8 +82,11 @@ export default function TacticalLineupScreen() {
             <Ionicons name="chevron-down" size={20} color="#9CA3AF" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.autoButton}>
-            <Ionicons name="sparkles" size={20} color="#0d59f2" />
+          <TouchableOpacity
+            style={styles.autoButton}
+            onPress={showComingSoonToast}
+          >
+            <Ionicons name="sparkles" size={20} color="#6B7280" />
             <Text style={styles.autoButtonText}>Auto</Text>
           </TouchableOpacity>
         </View>
@@ -128,6 +137,13 @@ export default function TacticalLineupScreen() {
 
       {/* Formation Picker Modal */}
       {renderFormationPicker()}
+
+      {/* Toast */}
+      <Toast
+        visible={showToast}
+        message="Coming Soon"
+        onHide={() => setShowToast(false)}
+      />
     </View>
   );
 
@@ -158,8 +174,8 @@ export default function TacticalLineupScreen() {
       <View style={styles.webRightPanel}>
         <View style={styles.webPanelHeader}>
           <Text style={styles.webPanelTitle}>Match Prediction</Text>
-          <TouchableOpacity>
-            <Ionicons name="settings" size={24} color="#9CA3AF" />
+          <TouchableOpacity onPress={showComingSoonToast}>
+            <Ionicons name="settings" size={24} color="#6B7280" />
           </TouchableOpacity>
         </View>
 
@@ -182,6 +198,13 @@ export default function TacticalLineupScreen() {
 
       {/* Formation Picker Modal - Also for web */}
       {renderFormationPicker()}
+
+      {/* Toast */}
+      <Toast
+        visible={showToast}
+        message="Coming Soon"
+        onHide={() => setShowToast(false)}
+      />
     </View>
   );
 
@@ -195,8 +218,11 @@ export default function TacticalLineupScreen() {
         <Text style={styles.webFormationText}>{formation.displayName}</Text>
         <Ionicons name="chevron-down" size={20} color="#9CA3AF" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.autoFillButton}>
-        <Ionicons name="sparkles" size={20} color="#0d59f2" />
+      <TouchableOpacity
+        style={styles.autoFillButton}
+        onPress={showComingSoonToast}
+      >
+        <Ionicons name="sparkles" size={20} color="#6B7280" />
         <Text style={styles.autoFillText}>Auto Fill Best XI</Text>
       </TouchableOpacity>
     </View>
@@ -418,18 +444,19 @@ const styles = StyleSheet.create({
   autoButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(13, 89, 242, 0.15)',
+    backgroundColor: 'rgba(107, 114, 128, 0.15)',
     paddingHorizontal: 16,
     paddingVertical: 18,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: 'rgba(13, 89, 242, 0.3)',
+    borderColor: 'rgba(107, 114, 128, 0.3)',
     gap: 6,
+    opacity: 0.6,
   },
   autoButtonText: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#0d59f2',
+    color: '#6B7280',
   },
   bottomActions: {
     padding: 16,
@@ -592,17 +619,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(13, 89, 242, 0.15)',
+    backgroundColor: 'rgba(107, 114, 128, 0.15)',
     paddingVertical: 16,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: 'rgba(13, 89, 242, 0.3)',
+    borderColor: 'rgba(107, 114, 128, 0.3)',
     gap: 8,
+    opacity: 0.6,
   },
   autoFillText: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#0d59f2',
+    color: '#6B7280',
   },
   playerCard: {
     flexDirection: 'row',

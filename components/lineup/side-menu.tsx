@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, usePathname } from 'expo-router';
+import { Toast } from '@/components/ui/toast';
 
 interface MenuItem {
   icon: keyof typeof Ionicons.glyphMap;
@@ -23,7 +24,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ isWeb = false }) => {
   const [toastMessage, setToastMessage] = useState('');
 
   const showUpcomingFeatureToast = () => {
-    setToastMessage('This is an upcoming feature');
+    setToastMessage('Coming Soon');
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
   };
@@ -87,28 +88,46 @@ export const SideMenu: React.FC<SideMenuProps> = ({ isWeb = false }) => {
 
       {/* Footer */}
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.logoutButton}>
-          <Ionicons name="log-out-outline" size={20} color="#9CA3AF" />
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={showUpcomingFeatureToast}
+        >
+          <Ionicons name="log-out-outline" size={20} color="#6B7280" />
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Toast */}
+      <Toast
+        visible={showToast}
+        message={toastMessage}
+        onHide={() => setShowToast(false)}
+      />
     </SafeAreaView>
   );
 };
 
-const MenuItemComponent: React.FC<MenuItem> = ({ icon, label, isActive, onPress }) => {
+const MenuItemComponent: React.FC<MenuItem> = ({ icon, label, isActive, onPress, isDisabled }) => {
   return (
     <TouchableOpacity
-      style={[styles.menuItem, isActive && styles.menuItemActive]}
+      style={[
+        styles.menuItem,
+        isActive && styles.menuItemActive,
+        isDisabled && styles.menuItemDisabled
+      ]}
       onPress={onPress}
       activeOpacity={0.7}
     >
       <Ionicons
         name={icon}
         size={22}
-        color={isActive ? '#0d59f2' : '#9CA3AF'}
+        color={isDisabled ? '#6B7280' : (isActive ? '#0d59f2' : '#9CA3AF')}
       />
-      <Text style={[styles.menuLabel, isActive && styles.menuLabelActive]}>
+      <Text style={[
+        styles.menuLabel,
+        isActive && styles.menuLabelActive,
+        isDisabled && styles.menuLabelDisabled
+      ]}>
         {label}
       </Text>
     </TouchableOpacity>
@@ -214,6 +233,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(13, 89, 242, 0.3)',
   },
+  menuItemDisabled: {
+    opacity: 0.5,
+  },
   menuLabel: {
     fontSize: 15,
     fontWeight: '500',
@@ -223,6 +245,9 @@ const styles = StyleSheet.create({
   menuLabelActive: {
     fontWeight: '600',
     color: '#0d59f2',
+  },
+  menuLabelDisabled: {
+    color: '#6B7280',
   },
   footer: {
     padding: 20,
@@ -238,7 +263,7 @@ const styles = StyleSheet.create({
   logoutText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#9CA3AF',
+    color: '#6B7280',
     marginLeft: 8,
   },
 });

@@ -14,13 +14,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { SideMenu } from '@/components/lineup/side-menu';
 import { SQUAD_PLAYERS } from '@/constants/squad-data';
+import { Toast } from '@/components/ui/toast';
 
 export default function HomeScreen() {
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const { width } = useWindowDimensions();
   const router = useRouter();
 
   const isWebLayout = width > 900;
+
+  const showComingSoonToast = () => {
+    setShowToast(true);
+  };
 
   // Team season stats
   const seasonStats = {
@@ -38,7 +44,7 @@ export default function HomeScreen() {
   const quickActions = [
     { icon: 'football' as const, label: 'Tactical Lineup', route: '/tactical-lineup', enabled: true },
     { icon: 'people' as const, label: 'Squad Management', route: '/squad-management', enabled: true },
-    { icon: 'swap-horizontal' as const, label: 'Transfers', route: null, enabled: false },
+    { icon: 'swap-horizontal' as const, label: 'Transfers', route: '/transfers', enabled: true },
     { icon: 'search' as const, label: 'Scouting', route: null, enabled: false },
     { icon: 'stats-chart' as const, label: 'Statistics', route: null, enabled: false },
     { icon: 'calendar' as const, label: 'Fixtures', route: null, enabled: false },
@@ -128,8 +134,14 @@ export default function HomeScreen() {
               isWebLayout && styles.quickActionCardWeb,
               !action.enabled && styles.quickActionDisabled
             ]}
-            onPress={() => action.route && router.push(action.route as any)}
-            activeOpacity={action.enabled ? 0.7 : 0.5}
+            onPress={() => {
+              if (action.enabled && action.route) {
+                router.push(action.route as any);
+              } else {
+                showComingSoonToast();
+              }
+            }}
+            activeOpacity={0.7}
           >
             <View style={styles.quickActionIcon}>
               <Ionicons name={action.icon} size={24} color={action.enabled ? '#3b82f6' : '#6B7280'} />
@@ -147,7 +159,7 @@ export default function HomeScreen() {
     <View style={styles.section}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Upcoming Fixtures</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={showComingSoonToast}>
           <Text style={styles.viewAllText}>View All</Text>
         </TouchableOpacity>
       </View>
@@ -229,8 +241,8 @@ export default function HomeScreen() {
         <View style={styles.headerCenter}>
           <Text style={styles.headerTitle}>Home</Text>
         </View>
-        <TouchableOpacity>
-          <Ionicons name="settings-outline" size={24} color="#ffffff" />
+        <TouchableOpacity onPress={showComingSoonToast}>
+          <Ionicons name="settings-outline" size={24} color="#6B7280" />
         </TouchableOpacity>
       </View>
 
@@ -269,6 +281,13 @@ export default function HomeScreen() {
           />
         </View>
       </Modal>
+
+      {/* Toast */}
+      <Toast
+        visible={showToast}
+        message="Coming Soon"
+        onHide={() => setShowToast(false)}
+      />
     </View>
   );
 
@@ -285,8 +304,11 @@ export default function HomeScreen() {
             <Text style={styles.seasonSubtitle}>Manchester City FC - Season 2025/26</Text>
           </View>
           <View style={styles.webHeaderActions}>
-            <TouchableOpacity style={styles.notificationBtn}>
-              <Ionicons name="notifications-outline" size={24} color="#9CA3AF" />
+            <TouchableOpacity
+              style={styles.notificationBtn}
+              onPress={showComingSoonToast}
+            >
+              <Ionicons name="notifications-outline" size={24} color="#6B7280" />
             </TouchableOpacity>
           </View>
         </View>
@@ -313,6 +335,13 @@ export default function HomeScreen() {
 
         <View style={styles.bottomSpacing} />
       </ScrollView>
+
+      {/* Toast */}
+      <Toast
+        visible={showToast}
+        message="Coming Soon"
+        onHide={() => setShowToast(false)}
+      />
     </View>
   );
 
