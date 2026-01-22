@@ -22,7 +22,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ isWeb = false }) => {
   const menuItems: MenuItem[] = [
     { icon: 'home', label: 'Home', isActive: pathname === '/', onPress: () => router.push('/') },
     { icon: 'bar-chart', label: 'Prediction', isActive: pathname === '/tactical-lineup', onPress: () => router.push('/tactical-lineup') },
-    { icon: 'swap-horizontal', label: 'Transfers', isActive: false, onPress: () => {} },
+    { icon: 'swap-horizontal', label: 'Transfers', isActive: pathname === '/transfers', onPress: () => router.push('/transfers') },
     { icon: 'search', label: 'Scouting', isActive: false, onPress: () => {} },
   ];
 
