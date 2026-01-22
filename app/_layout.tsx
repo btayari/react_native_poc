@@ -20,6 +20,8 @@ export default function RootLayout() {
             <Stack.Screen name="index" />
             <Stack.Screen name="tactical-lineup" />
             <Stack.Screen name="squad-management" />
+            <Stack.Screen name="transfers" />
+            <Stack.Screen name="match-prediction" />
             <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
         </Stack>
       <StatusBar style="light" />
