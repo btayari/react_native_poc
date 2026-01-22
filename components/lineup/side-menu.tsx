@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,6 +9,7 @@ interface MenuItem {
   label: string;
   isActive: boolean;
   onPress: () => void;
+  isDisabled?: boolean;
 }
 
 interface SideMenuProps {
@@ -18,23 +19,32 @@ interface SideMenuProps {
 export const SideMenu: React.FC<SideMenuProps> = ({ isWeb = false }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+
+  const showUpcomingFeatureToast = () => {
+    setToastMessage('This is an upcoming feature');
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
 
   const menuItems: MenuItem[] = [
     { icon: 'home', label: 'Home', isActive: pathname === '/', onPress: () => router.push('/') },
     { icon: 'bar-chart', label: 'Prediction', isActive: pathname === '/tactical-lineup', onPress: () => router.push('/tactical-lineup') },
     { icon: 'swap-horizontal', label: 'Transfers', isActive: pathname === '/transfers', onPress: () => router.push('/transfers') },
-    { icon: 'search', label: 'Scouting', isActive: false, onPress: () => {} },
+    { icon: 'search', label: 'Scouting', isActive: false, onPress: showUpcomingFeatureToast, isDisabled: true },
   ];
 
   const teamMenuItems: MenuItem[] = [
     { icon: 'people', label: 'Squad', isActive: pathname === '/squad-management', onPress: () => router.push('/squad-management') },
-    { icon: 'stats-chart', label: 'Statistics', isActive: false, onPress: () => {} },
-    { icon: 'calendar', label: 'Fixtures', isActive: false, onPress: () => {} },
+    { icon: 'stats-chart', label: 'Statistics', isActive: false, onPress: showUpcomingFeatureToast, isDisabled: true },
+    { icon: 'calendar', label: 'Fixtures', isActive: false, onPress: showUpcomingFeatureToast, isDisabled: true },
   ];
 
   const settingsItems: MenuItem[] = [
-    { icon: 'settings', label: 'Settings', isActive: false, onPress: () => {} },
-    { icon: 'help-circle', label: 'Help & Support', isActive: false, onPress: () => {} },
+
+    { icon: 'settings', label: 'Settings', isActive: false, onPress: showUpcomingFeatureToast, isDisabled: true },
+    { icon: 'help-circle', label: 'Help & Support', isActive: false, onPress: showUpcomingFeatureToast, isDisabled: true },
   ];
 
   return (

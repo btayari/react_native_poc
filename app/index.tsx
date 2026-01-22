@@ -736,7 +736,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#374151',
     alignItems: 'flex-start',
-    maxHeight: 160,
   },
   statCardWeb: {
     minWidth: 0,
@@ -884,7 +883,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   recentFormSection: {
-    marginTop: 10,
     marginBottom: 20,
   },
   recentFormTitle: {
@@ -895,13 +893,13 @@ const styles = StyleSheet.create({
   },
   formBadges: {
     flexDirection: 'row',
-    gap: 10,
+    gap: 8,
     flex: 1,
   },
   formBadge: {
-    width: 48,
-    height: 48,
-    borderRadius: 10,
+    width: 30,
+    height: 30,
+    borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -915,7 +913,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ef4444',
   },
   formBadgeText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#ffffff',
   },
@@ -926,7 +924,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   formStatsText: {
-    fontSize: 13,
+    fontSize: 11,
     fontWeight: '600',
     color: '#22c55e',
   },

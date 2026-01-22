@@ -34,6 +34,14 @@ export default function TransfersScreen() {
   const [showSortPicker, setShowSortPicker] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState<TransferPlayer | null>(null);
   const [showDrawer, setShowDrawer] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [showToast, setShowToast] = useState(false);
+
+  const showUpcomingFeatureToast = () => {
+    setToastMessage('This is an upcoming feature');
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
 
   const availableClubs = Array.from(new Set(SUGGESTED_TRANSFER_PLAYERS.map(p => p.club))).sort();
 
@@ -134,6 +142,15 @@ export default function TransfersScreen() {
             </View>
           </View>
         </View>
+        {renderModals()}
+        {showToast && (
+          <View style={styles.toastContainer} pointerEvents="none">
+            <View style={styles.toast}>
+              <Ionicons name="information-circle" size={20} color="#0d59f2" />
+              <Text style={styles.toastText}>{toastMessage}</Text>
+            </View>
+          </View>
+        )}
       </SafeAreaView>
     );
   }
@@ -148,6 +165,14 @@ export default function TransfersScreen() {
         {activeTab === 2 && renderRecentTransfers()}
       </View>
       {renderModals()}
+      {showToast && (
+        <View style={styles.toastContainer} pointerEvents="none">
+          <View style={styles.toast}>
+            <Ionicons name="information-circle" size={20} color="#0d59f2" />
+            <Text style={styles.toastText}>{toastMessage}</Text>
+          </View>
+        </View>
+      )}
     </SafeAreaView>
   );
 
@@ -531,7 +556,12 @@ export default function TransfersScreen() {
     const positionColor = getPositionColorForString(transfer.position);
 
     return (
-      <View key={index} style={styles.transferCard}>
+      <TouchableOpacity
+        key={index}
+        style={[styles.transferCard, styles.transferCardDisabled]}
+        onPress={showUpcomingFeatureToast}
+        activeOpacity={0.7}
+      >
         <View style={styles.transferHeader}>
           <View style={[styles.positionBadge, { backgroundColor: `${positionColor}33`, borderColor: positionColor }]}>
             <Text style={[styles.positionBadgeText, { color: positionColor }]}>{transfer.position}</Text>
@@ -556,7 +586,7 @@ export default function TransfersScreen() {
           <Ionicons name="calendar-outline" size={12} color="#6b7280" />
           <Text style={styles.transferDateText}>{transfer.date}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 
@@ -640,13 +670,18 @@ export default function TransfersScreen() {
 
   function renderPositionNeed(position: string, priority: string, color: string) {
     return (
-      <View style={styles.positionNeed}>
+      <TouchableOpacity
+        style={[styles.positionNeed, styles.positionNeedDisabled]}
+        onPress={showUpcomingFeatureToast}
+        activeOpacity={0.7}
+      >
         <View style={[styles.positionNeedBar, { backgroundColor: color }]} />
         <View style={styles.positionNeedInfo}>
           <Text style={styles.positionNeedTitle}>{position}</Text>
           <Text style={[styles.positionNeedPriority, { color }]}>{priority}</Text>
         </View>
-      </View>
+        <Ionicons name="chevron-forward" size={16} color="#6b7280" />
+      </TouchableOpacity>
     );
   }
 
@@ -1434,6 +1469,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     gap: 12,
   },
+  transferCardDisabled: {
+    opacity: 0.6,
+  },
   transferHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1619,6 +1657,9 @@ const styles = StyleSheet.create({
     borderColor: '#374151',
     marginBottom: 12,
     gap: 12,
+  },
+  positionNeedDisabled: {
+    opacity: 0.6,
   },
   positionNeedBar: {
     width: 4,
@@ -1808,6 +1849,36 @@ const styles = StyleSheet.create({
   drawerBackdrop: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  toastContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 9999,
+    elevation: 9999,
+  },
+  toast: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1e293b',
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#0d59f2',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+    gap: 10,
+  },
+  toastText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#ffffff',
   },
 });
 
